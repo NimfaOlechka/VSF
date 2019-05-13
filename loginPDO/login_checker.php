@@ -1,6 +1,6 @@
 <?php
 // login checker for 'customer' access level
-//TODO: redirect to info page where all can se information 
+//TODO: redirect to info page where all can see information 
  
 // if access level was not 'Admin', redirect him to login page
 if(isset($_SESSION['access_level']) && $_SESSION['access_level']=="Admin"){
