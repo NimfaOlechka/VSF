@@ -12,6 +12,7 @@ include_once "login_checker.php";
 include_once 'config/database.php';
 include_once 'objects/user.php';
 include_once "libs/php/utils.php";
+
  
 // include page header HTML0
 include_once "layot_head.php";
@@ -49,6 +50,9 @@ echo "<div class='col-md-12'>";
 			$user->contact_number=$_POST['contact_number'];
 			$user->address=$_POST['address'];
 			$user->password=$_POST['password'];
+			//set uddanelsen
+			$user->udd_uid=$_POST['udd_uid'];
+			//hidden properties
 			$user->access_level='Customer';
 			$user->status=1;
 			 
@@ -102,6 +106,17 @@ echo "<div class='col-md-12'>";
 		            <td>Password</td>
 		            <td><input type='password' name='password' class='form-control' required id='passwordInput'></td>
 		        </tr>
+
+		        <!-- uddannelse 'select' field -->
+		        <tr>
+		            <td>Uddannelse</td>
+		            <td>
+		            <?php	
+		            	//include read uddannels form
+						include_once "dropdown_uddannelse_template.php";
+					?>
+		            </td>
+		        </tr>        
 		 
 		        <tr>
 		            <td></td>
@@ -117,6 +132,8 @@ echo "<div class='col-md-12'>";
 	<?php
  
 echo "</div>";
+
+
  
 // include page footer HTML
 include_once "layot_foot.php";

@@ -1,6 +1,6 @@
 <?php
 // login checker for 'customer' access level
-//TODO: redirect to info page where all can see information 
+//TODO: redirect to info page where all can se information 
  
 // if access level was not 'Admin', redirect him to login page
 if(isset($_SESSION['access_level']) && $_SESSION['access_level']=="Admin"){
@@ -11,7 +11,7 @@ if(isset($_SESSION['access_level']) && $_SESSION['access_level']=="Admin"){
 else if(isset($require_login) && $require_login==true){
     // if user not yet logged in, redirect to login page
     if(!isset($_SESSION['access_level'])){
-        header("Location: {$home_url}login.php?action=please_login");
+        header("Location: {$home_url}information.php?");
     }
 }
  
