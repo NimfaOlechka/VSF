@@ -18,15 +18,14 @@ class Database
 		$this->servername = "localhost";
 		$this->username = "root";
 		$this->password = "";
-		$this->dbname = "test";
+		$this->dbname = "vsf";
 		
 
 		try {
 
 			$dsn = "mysql:host=".$this->servername.";dbname=".$this->dbname;
 			$this->conn = new PDO($dsn, $this->username, $this->password);
-			$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			echo "Connected";
+			$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);			
 			return $this->conn;
 		} catch (PDOException $e) {
 			echo $e->getMessage();

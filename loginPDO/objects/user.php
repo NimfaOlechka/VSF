@@ -17,6 +17,7 @@ class User
     public $contact_number;
     public $address;
     public $password;
+    public $udd_uid;
     public $access_level;
     public $access_code;
     public $status;
@@ -32,7 +33,7 @@ class User
 	function emailExists(){
 	 
 	    // query to check if email exists
-	    $query = "SELECT id, firstname, lastname, access_level, password, status
+	    $query = "SELECT id, firstname, lastname, access_level, password, udd_uid, status
 	            FROM " . $this->table_name . "
 	            WHERE email = ?
 	            LIMIT 0,1";
@@ -64,6 +65,8 @@ class User
 	        $this->lastname = $row['lastname'];
 	        $this->access_level = $row['access_level'];
 	        $this->password = $row['password'];
+	        //set udd til user
+	        $this->udd_uid = $row['udd_uid'];
 	        $this->status = $row['status'];
 	 
 	        // return true because email exists in the database
@@ -90,6 +93,7 @@ class User
 	                contact_number = :contact_number,
 	                address = :address,
 	                password = :password,
+	                udd_uid = :udd_uid,
 	                access_level = :access_level,
 	                status = :status,
 	                created = :created";
@@ -104,6 +108,7 @@ class User
 	    $this->contact_number=htmlspecialchars(strip_tags($this->contact_number));
 	    $this->address=htmlspecialchars(strip_tags($this->address));
 	    $this->password=htmlspecialchars(strip_tags($this->password));
+	    $this->udd_uid=htmlspecialchars(strip_tags($this->udd_uid));
 	    $this->access_level=htmlspecialchars(strip_tags($this->access_level));
 	    $this->status=htmlspecialchars(strip_tags($this->status));
 	 
@@ -118,6 +123,9 @@ class User
 	    $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
 	    $stmt->bindParam(':password', $password_hash);
 	 
+	 	//uddannelse
+	 	$stmt->bindParam(':udd_uid', $this->udd_uid);
+	 	
 	    $stmt->bindParam(':access_level', $this->access_level);
 	    $stmt->bindParam(':status', $this->status);
 	    $stmt->bindParam(':created', $this->created);
