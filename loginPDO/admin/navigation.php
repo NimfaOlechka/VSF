@@ -12,7 +12,7 @@
             </button>
  
             <!-- Change "Site Admin" to your site name -->
-            <a class="navbar-brand" href="<?php echo $home_url; ?>admin/index.php">Admin</a>
+            <a class="navbar-brand" href="<?php echo $home_url; ?>admin/index.php">Mercantec Admin</a>
         </div>
  
         <div class="navbar-collapse collapse">
@@ -28,6 +28,18 @@
                 <li <?php
                         echo $page_title=="Users" ? "class='active'" : ""; ?> >
                     <a href="<?php echo $home_url; ?>admin/read_users.php">Users</a>
+                </li>
+
+                <!-- highlight for courses related pages -->
+                <li <?php
+                        echo $page_title=="Fag" ? "class='active'" : ""; ?> >
+                    <a href="<?php echo $home_url; ?>admin/read_fag.php">Fag oversigt</a>
+                </li>
+
+                <!-- highlight for create new course related pages -->
+                <li <?php
+                        echo $page_title=="Fag" ? "class='active'" : ""; ?> >
+                    <a href="<?php echo $home_url; ?>admin/create_fag.php">Opret ny fag</a>
                 </li>
             </ul>
  

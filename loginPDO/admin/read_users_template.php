@@ -39,7 +39,7 @@
     // tell the user there are no selfies
     else{
         echo "<div class='alert alert-danger'>
-            <strong>No users found.</strong>
+            <strong>No fag oprettet.</strong>
         </div>";
     }
 ?>

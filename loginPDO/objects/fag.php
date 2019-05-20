@@ -9,13 +9,15 @@ class Fag
     private $conn;
     private $table_name = "fag";
     //object properties
-    public $id;
-	public $faguid;	
-	public $fagtitle;
+    //public $id;
+	public $fag_uid;	
+	public $fag_title;
 	public $startdato;
 	public $enddato;
+	public $created;
+	
 	//TODO: insert uddannelse som array...?
-	public $uddannelse;
+	//public $uddannelse;
 
 	public function __construct($db){
         $this->conn = $db;
@@ -34,30 +36,29 @@ class Fag
     	$query = "INSERT INTO
 	                " . $this->table_name . "
 	            SET
-	                faguid = :faguid,
-	                fagtitle = :fagtitle,	                
+	                fag_uid = :fag_uid,
+	                fag_title = :fag_title,	                
 	                startdato = :startdato,
-	                enddato = :enddato,
-	                uddannelse = :uddannelse";
-	 
+	                enddato = :enddato";
+	              
 	    // prepare the query
 	    $stmt = $this->conn->prepare($query);
 
 	    // sanitize
-	    $this->faguid=htmlspecialchars(strip_tags($this->faguid));
-	    $this->fagtitle=htmlspecialchars(strip_tags($this->fagtitle));
+	    $this->faguid=htmlspecialchars(strip_tags($this->fag_uid));
+	    $this->fagtitle=htmlspecialchars(strip_tags($this->fag_title));
 	    $this->startdato=htmlspecialchars(strip_tags($this->startdato));
 	    $this->enddato=htmlspecialchars(strip_tags($this->enddato));
 	    //TODO: change this
-	    $this->uddannelse=htmlspecialchars(strip_tags($this->uddannelse));
+	    //$this->uddannelse=htmlspecialchars(strip_tags($this->uddannelse));
 
 	    // bind the values
-	    $stmt->bindParam(':faguid', $this->faguid);
-	    $stmt->bindParam(':fagtitle', $this->fagtitle);
+	    $stmt->bindParam(':faguid', $this->fag_uid);
+	    $stmt->bindParam(':fagtitle', $this->fag_title);
 	    $stmt->bindParam(':startdato', $this->startdato);
 	    $stmt->bindParam(':enddato', $this->enddato);
 	    //TODO: change this
-	    $stmt->bindParam(':uddannelse', $this->uddannelse);
+	    //$stmt->bindParam(':uddannelse', $this->uddannelse);
 
 	    // execute the query, also check if query was successful
 	    if($stmt->execute()){
@@ -70,15 +71,14 @@ class Fag
 
     }
 
-    public function getAll($from_record_num, $records_per_page)
+    public function readAll($from_record_num, $records_per_page)
     {
     	//query to read all fag records
     	$query = "SELECT
-	                faguid,
-	                fagtitle,
+	                fag_uid,
+	                fag_title,
 	                startdato,
-	                enddato,
-	                uddannelse
+	                enddato
 	            FROM " . $this->table_name . "
 	            ORDER BY startdato DESC
 	            LIMIT ?, ?";
@@ -107,7 +107,7 @@ class Fag
 	public function countAll(){
 	 
 	    // query to select all user records
-	    $query = "SELECT id FROM " . $this->table_name . "";
+	    $query = "SELECT fag_uid FROM " . $this->table_name . "";
 	 
 	    // prepare query statement
 	    $stmt = $this->conn->prepare($query);
