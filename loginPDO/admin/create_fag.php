@@ -8,6 +8,7 @@ include_once "login_checker.php";
 // include classes
 include_once '../config/database.php';
 include_once '../objects/fag.php';
+include_once '../objects/fill_select_box.php';
  
 // get database connection
 $database = new Database();
@@ -26,7 +27,7 @@ include_once "layout_head.php";
 echo "<div class='col-md-12'>";
 
 ?>
-		<form action='read_fag.php/create_fag.php' method='post' id='opret'>
+		<form method='post' id='opret_fag'>
 		 
 		    <table class='table table-responsive'>
 		 
@@ -52,20 +53,15 @@ echo "<div class='col-md-12'>";
 		 
 
 		        <!-- uddannelse 'select' field -->
-		        <tr>
+		        <tr id="add_udd">
 		            <td>Uddannelse</td>
-		            <td>
-		            <?php	
-		            	//include read uddannels form
-						include_once "../dropdown_uddannelse_template.php";
-					?>
-		            </td>
+
 		        </tr>   
 
 		        <tr>
 		            <td></td>
 		            <td>
-		                <button type="submit" class="btn btn-primary">
+		                <button type="button" class="btn btn-primary add" name="add">
 		                    <span class="glyphicon glyphicon-plus"></span>Tilføj uddannelse
 		                </button>
 		            </td>
@@ -75,7 +71,7 @@ echo "<div class='col-md-12'>";
 		        <tr>
 		            <td></td>
 		            <td>
-		                <button type="submit" class="btn btn-success">
+		                <button type="submit" class="btn btn-success" id="submit" name="submit">
 		                    <span class="glyphicon glyphicon-plus"></span> Opret
 		                </button>
 		            </td>
@@ -90,4 +86,22 @@ echo "</div>";
 // include page footer HTML
 include_once "layout_foot.php";
 ?>
+<script>
+	$(document).ready(function(){
+		$(document).on('click', '.add', function(){
+			var html = '';
+			html += '<tr>';			
+			html += '<td><select name="item_unit[]" class="form-control item_unit"><option value="">Select Unit</option><?php echo fill_select_box(); ?></select></td>';
+			html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></td></tr>';
 
+			$('#add_udd').append(html);
+		});
+
+		$(document).on('click', '.remove', function(){
+			$(this).closest('tr').remove();
+		});
+		
+	});
+
+	
+</script>
