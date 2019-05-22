@@ -1,7 +1,8 @@
 <?php
 // core configuration
 include_once "../config/core.php";
- 
+// set page title
+$page_title = "Opret ny fag"; 
 // check if logged in as admin
 include_once "login_checker.php";
  
@@ -9,19 +10,47 @@ include_once "login_checker.php";
 include_once '../config/database.php';
 include_once '../objects/fag.php';
 include_once '../objects/fill_select_box.php';
- 
-// get database connection
-$database = new Database();
-$db = $database->getConnection();
- 
-// initialize objects
-$fag = new Fag($db);
- 
-// set page title
-$page_title = "Opret ny fag";
- 
+  
 // include page header HTML
 include_once "layout_head.php";
+
+// registration form HTML
+// code when form was submitted
+// if form was posted
+if ($_POST) {
+	# code...
+	// get database connection
+	$database = new Database();
+	$db = $database->getConnection();
+ 
+	// initialize objects
+	$fag = new Fag($db);
+
+	$fag->fag_uid = $_POST['fag_uid'];
+	$fag->fag_title = $_POST['fag_title'];
+	$fag->startdato = $_POST['startdato'];
+	$fag->enddato = $_POST['enddato'];
+	$fag->uddannelse = $_POST['udd_uid'];	    
+
+	
+	//*create ny record in database
+		if ($fag->create()) {
+		//loop gennem values af select box and add relation between tables
+			$fag->setUddannelse();
+		echo '<script language="javascript">';
+		echo 'alert("fag er tilføjet")';
+		echo '</script>';
+	} else {
+
+		echo "<div class='alert alert-danger' role='alert'>Unable to add ur record. Please try again.</div>";
+
+	}
+		
+	    
+
+	
+
+}
 
  
 echo "<div class='col-md-12'>";
@@ -43,12 +72,12 @@ echo "<div class='col-md-12'>";
 		 
 		        <tr>
 		            <td>Start dato</td>
-		            <td><input type='date' name='startdato' class='form-control' required value="<?php echo isset($_POST['startdato']) ? htmlspecialchars($_POST['startdato'], ENT_QUOTES) : "";  ?>" /></td>
+		            <td><input type='date' name='startdato' class='form-control' required/></td>
 		        </tr>
 		 
 		        <tr>
 		            <td>Slut dato</td>
-		            <td><input type="date" name="enddato" class='form-control' required><?php echo isset($_POST['enddato']) ? htmlspecialchars($_POST['enddato'], ENT_QUOTES) : "";  ?></textarea></td>
+		            <td><input type="date" name="enddato" class='form-control' required /></td>
 		        </tr>		        
 		 
 
@@ -91,7 +120,7 @@ include_once "layout_foot.php";
 		$(document).on('click', '.add', function(){
 			var html = '';
 			html += '<tr>';			
-			html += '<td><select name="item_unit[]" class="form-control item_unit"><option value="">Select Unit</option><?php echo fill_select_box(); ?></select></td>';
+			html += '<td><select name="udd_uid[]" class="form-control" required><option value="">Select Unit</option><?php echo fill_select_box(); ?></select></td>';
 			html += '<td><button type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus"></span></button></td></tr>';
 
 			$('#add_udd').append(html);
